@@ -14,9 +14,9 @@ This is an example of the type of visualization we are able to create with this 
 
 ## What does it do?
 
-When [NServcieBus auditing](http://docs.particular.net/nservicebus/operations/auditing) is enabled, each message that is processed by an endpoint is sent to an audit queue along with some metadata about how it was processed. [ServiceControl](http://docs.particular.net/platform/#servicecontrol-the-foundation) will read all of the messages from the audit queue and store them in an embedded database. 
+When [NServiceBus auditing](http://docs.particular.net/nservicebus/operations/auditing) is enabled, each message that is processed by an endpoint is sent to an audit queue along with some metadata about how it was processed. [ServiceControl](http://docs.particular.net/platform/#servicecontrol-the-foundation) will read all of the messages from the audit queue and store them in an embedded database. 
 
-This tool runs through all of the audited messages in the ServiceControl database and uses the processing metadata to construct a visualization of your system that you can open in Visual Studio. The generated graph contains nodes for each endpoint and message type and draws edges between them to show the flow of messages between endpoints.
+This tool runs through all of the audited messages in the ServiceControl database and uses the processing metadata to construct a visualization of your system that you can open in Visual Studio. The generated graph contains nodes for each endpoint and message type and draws edges between them to show the flow of messages.
 
 ![Data flow for Routing Visualization tool](./how-does-it-work.PNG) 
 
@@ -26,7 +26,7 @@ This tool runs through all of the audited messages in the ServiceControl databas
 2. [Install ServiceControl](http://docs.particular.net/servicecontrol/installation) and configure it to read audit messages from the central audit queue
 3. Configure ServiceControl to [expose it's embedded database](http://docs.particular.net/servicecontrol/use-ravendb-studio)
 4. Get the latest copy of [this tool](https://github.com/ParticularLabs/RoutingVisualization)
-5. Update `RoutingVisualization.exe.config` to point to the location of your ServiceControl instance. The default is `http://localhost:33333/storage`. You can test this url by opening it in Internet Explorer. If it is correct you will see the RavenDB management studio. 
+5. Update `RoutingVisualization.exe.config` to point to the location of your ServiceControl instance. The default is `http://localhost:33333/storage`. You can test this url by opening it in Internet Explorer. If it is correct you will see the RavenDB management studio. The version of RavenDB Management Studio that ships with ServiceControl works best with Internet Explorer. If you try to use a different browser you may be prompted to install a plugin. 
 6. Open a command prompt window and run the tool: `RoutingVisualization.exe <filename>`. If you do not specificy a file name then `route-graph.dgml` will be used. 
 
 ![Screenshot of the tool running](./running-screenshot.PNG)
