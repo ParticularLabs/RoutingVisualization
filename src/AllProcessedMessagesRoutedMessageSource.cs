@@ -20,7 +20,7 @@ namespace RoutingVisualization
                 var count = 0;
                 while (stream.MoveNext())
                 {
-                    Console.Write($"\r{count++}");
+                    Console.Write($"\rMessage #{count++}");
                     onNext(stream.Current.Document);
                 }
                 Console.WriteLine();
