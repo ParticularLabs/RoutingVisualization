@@ -1,6 +1,6 @@
 # Routing Visualization
 
-Using audit data stored in ServiceControl to construct a visualization of endpoints and the messages being routed between them. 
+A command line tool that uses audit data stored in ServiceControl to construct a visualization of endpoints and the messages being routed between them. 
 
 ## Why did we create this?
 
@@ -8,7 +8,7 @@ One of the key benefits of a solution built on top of NServiceBus is that endpoi
 
 This experiment demonstrates one method we could use to fulfill this request.
 
-This is an example of the type of visualization we are able to create with this tool. Click the image to download a copy of the diagram that you cna open and manipulate in Visual Studio.
+This is an example of the type of visualization we are able to create with this tool. Click the image to download a copy of the diagram that you can open and manipulate in Visual Studio.
 
 [![Showcase sample rout graph](./sample/video-store-route-graph.PNG)](./sample/video-store-route-graph.zip)
 
@@ -27,7 +27,7 @@ This tool runs through all of the audited messages in the ServiceControl databas
 3. Configure ServiceControl to [expose it's embedded database](http://docs.particular.net/servicecontrol/use-ravendb-studio)
 4. Get the latest copy of [this tool](https://github.com/ParticularLabs/RoutingVisualization)
 5. Update `RoutingVisualization.exe.config` to point to the location of your ServiceControl instance. The default is `http://localhost:33333/storage`. You can test this url by opening it in Internet Explorer. If it is correct you will see the RavenDB management studio. 
-6. Run the tool: `RoutingVisualization.exe <filename.dgml>`. If you do not specificy a file name then `route-graph.dgml` will be used. 
+6. Open a command prompt window and run the tool: `RoutingVisualization.exe <filename>`. If you do not specificy a file name then `route-graph.dgml` will be used. 
 
 ![Screenshot of the tool running](./running-screenshot.PNG)
 

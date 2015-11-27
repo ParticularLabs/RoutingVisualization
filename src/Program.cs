@@ -31,8 +31,13 @@ namespace RoutingVisualization
             var model = modelBuilder.GetModel();
             Console.WriteLine("Model generated");
 
-            var outputFileName = args.FirstOrDefault() ?? "route-graph.dgml";
             var dgml = DgmlRouteDocFactory.CreateDgml(model);
+            var outputFileName = args.FirstOrDefault() ?? "route-graph";
+            if (!outputFileName.EndsWith(".dgml", StringComparison.CurrentCultureIgnoreCase))
+            {
+                outputFileName += ".dgml";
+            }
+
             dgml.Save(outputFileName);
 
             Console.WriteLine($"Created {outputFileName}");
