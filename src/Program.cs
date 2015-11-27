@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Configuration;
 using System.Linq;
+using System.Reflection;
+using Raven.Client;
 using Raven.Client.Document;
 using Raven.Imports.Newtonsoft.Json;
 
@@ -10,18 +12,8 @@ namespace RoutingVisualization
     {
         static void Main(string[] args)
         {
-            var store = new DocumentStore
-            {
-                Url = ConfigurationManager.AppSettings["ServiceControl/RavenAddress"],
-                Conventions =
-                {
-                    // Prevents $type from interfering with deserialization of EndpointDetails
-                    CustomizeJsonSerializer = serializer => serializer.TypeNameHandling = TypeNameHandling.None
-                },
-            };
-
-            store.Initialize();
-            Console.WriteLine($"Reading messages from {store.Url}");
+            var serviceControlDataUrl = ConfigurationManager.AppSettings["ServiceControl/RavenAddress"];
+            var store = GetDocumentStore(serviceControlDataUrl);
 
             var modelBuilder = new ModelBuilder(GetNodeStrategy());
 
@@ -41,6 +33,36 @@ namespace RoutingVisualization
             dgml.Save(outputFileName);
 
             Console.WriteLine($"Created {outputFileName}");
+        }
+
+        private static IDocumentStore GetDocumentStore(string url)
+        {
+            var store = new DocumentStore
+            {
+                Url = url,
+                Conventions =
+                {
+                    // Prevents $type from interfering with deserialization of EndpointDetails
+                    CustomizeJsonSerializer = serializer => serializer.TypeNameHandling = TypeNameHandling.None
+                },
+            };
+
+            store.Initialize();
+
+            try
+            {
+                store.DatabaseCommands.GetBuildNumber();
+            }
+            catch
+            {
+                Console.WriteLine($"Unable to connect to the configured ServiceControl database.\nPlease check that opening {url} in the browser shows the RavenDB Management Studio.");
+                Console.WriteLine($"You can change this location by adjusting the value of ServiceControl/RavenAddress in the config file:\n\t{AppDomain.CurrentDomain.SetupInformation.ConfigurationFile}");
+                throw;
+            }
+
+            Console.WriteLine($"Reading messages from {store.Url}");
+
+            return store;
         }
 
         private static NodeStrategy GetNodeStrategy()
