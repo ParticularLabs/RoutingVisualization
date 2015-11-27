@@ -8,7 +8,20 @@ namespace RoutingVisualization
 
         public string GetNodeId(ProcessedMessage message)
         {
-            return ToNodeName(GetNodeId(message.MessageMetadata.SendingEndpoint), message.Headers["NServiceBus.MessageIntent"], message.MessageMetadata.MessageType);
+            var intent = message.Headers["NServiceBus.MessageIntent"];
+
+            if (intent == "Publish")
+            {
+                return ToNodeName(GetNodeId(message.MessageMetadata.SendingEndpoint), intent,
+                    message.MessageMetadata.MessageType);
+            }
+            else
+            {
+                return ToNodeName(GetNodeId(message.MessageMetadata.ReceivingEndpoint), intent,
+                    message.MessageMetadata.MessageType);
+            }
+
+            //return ToNodeName(GetNodeId(message.MessageMetadata.SendingEndpoint), intent, message.MessageMetadata.MessageType);
         }
 
         protected static string ToNodeName(params string[] parts)
