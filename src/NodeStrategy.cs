@@ -54,6 +54,8 @@ namespace RoutingVisualization
     {
         public override string GetNodeId(EndpointDetails details)
         {
+            if (details == null)
+                return null;
             return ToNodeName(details.Name);
         }
     }
