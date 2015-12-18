@@ -47,7 +47,10 @@ namespace RoutingVisualization
             { 
                 var messageNode = _model.GetMessage(messageId);
                 messageNode["Intent"] = intent;
-                messageNode["Label"] = message.MessageMetadata.MessageType.Split('.').Last();
+                if (!string.IsNullOrWhiteSpace(message.MessageMetadata.MessageType))
+                {
+                    messageNode["Label"] = message.MessageMetadata.MessageType.Split('.').Last();
+                }
             }
 
             if (senderId != null && messageId != null)
