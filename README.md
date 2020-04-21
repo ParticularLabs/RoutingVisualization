@@ -24,14 +24,16 @@ This tool runs through all of the audited messages in the ServiceControl databas
 
 1. [Enable Auditing](http://docs.particular.net/nservicebus/operations/auditing) on each of your endpoints and configure each one to send audited messages to a central audit queue
 2. [Install ServiceControl](http://docs.particular.net/servicecontrol/installation) and configure it to read audit messages from the central audit queue
-3. Configure ServiceControl to [expose it's embedded database](http://docs.particular.net/servicecontrol/use-ravendb-studio)
+3. Configure the ServiceControl Audit instance to [expose it's embedded database](https://docs.particular.net/servicecontrol/audit-instances/maintenance-mode)
 4. Get the latest copy of [this tool](https://github.com/ParticularLabs/RoutingVisualization)
-5. Update `RoutingVisualization.exe.config` to point to the location of your ServiceControl instance. The default is `http://localhost:33333/storage`. You can test this url by opening it in Internet Explorer. If it is correct you will see the RavenDB management studio. The version of RavenDB Management Studio that ships with ServiceControl works best with Internet Explorer. If you try to use a different browser you may be prompted to install a plugin. 
+5. Update `RoutingVisualization.exe.config` to point to the location of your Maintenance Port of you ServiceControl Audit instance. The default is `http://localhost:44445/`. You can test this url by opening it in a browser. It should show the RavenDB Management Studio 
 6. Open a command prompt window and run the tool: `RoutingVisualization.exe <filename>`. If you do not specificy a file name then `route-graph.dgml` will be used. 
 
 ![Screenshot of the tool running](./running-screenshot.PNG)
 
 The tool will connect to the ServiceControl embedded database and iterate through every audited message building up an internal model as it goes. Once it has read all of the messages the model is serialized as [DGML](https://en.wikipedia.org/wiki/DGML). The DGML file is XML that specifies all of the endpoints, message types and the links between them. You can open a DGML file in Visual Studio.
+
+The latest versions of Visual Studio do not include a DGML viewer by default. You can install it from Visual Studio by selecting _Tools > Get tools and features... > Individual Component > Code tools > DGML Editor_.
 
 ## Notes
 

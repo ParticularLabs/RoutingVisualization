@@ -51,7 +51,7 @@ namespace RoutingVisualization
 
             try
             {
-                store.DatabaseCommands.GetBuildNumber();
+                store.DatabaseCommands.GetStatistics();
             }
             catch
             {
